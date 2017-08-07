@@ -2,10 +2,10 @@
 
 # Import modules
 import numpy as np
-from perception_functions import *
 import sklearn
 from sklearn.preprocessing import LabelEncoder
 import pickle
+from sensor_stick.srv import GetNormals
 from sensor_stick.features import compute_color_histograms
 from sensor_stick.features import compute_normal_histograms
 from visualization_msgs.msg import Marker
@@ -23,7 +23,12 @@ from std_msgs.msg import String
 from pr2_robot.srv import *
 from rospy_message_converter import message_converter
 import yaml
+from perception_functions import *
 
+# Helper function to get surface normals
+def get_normals(cloud):
+    get_normals_prox = rospy.ServiceProxy('/feature_extractor/get_normals', GetNormals)
+    return get_normals_prox(cloud).cluster
 
 # Helper function to create a yaml friendly dictionary from ROS messages
 def make_yaml_dict(test_scene_num, arm_name, object_name, pick_pose, place_pose):
