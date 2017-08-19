@@ -163,14 +163,12 @@ def pcl_callback(pcl_msg):
     # Could add some logic to determine whether or not your object detections are robust
     # before calling pr2_mover()
     try:
-        rospy.loginfo('starting pr2_mover')
         pr2_mover(detected_objects_list)
     except rospy.ROSInterruptException:
         pass
 
 # function to load parameters and request PickPlace service
 def pr2_mover(object_list):
-    rospy.loginfo('started pr2_mover')
 
     # Initialize variables
     test_scene_num = Int32()
@@ -180,11 +178,9 @@ def pr2_mover(object_list):
     pick_pose_point = Point()
     place_pose_point = Point()
     place_pose = Pose()
-    dropbox_positions = {}
-    dropbox_arm_choice = {}
     dropbox = {}
     dict_list = []
-    current_picklist = 1
+    current_picklist = 3
 
     # Get/Read parameters
     object_list_param = rospy.get_param('/object_list')
